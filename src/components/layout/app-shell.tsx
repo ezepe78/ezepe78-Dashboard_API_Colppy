@@ -2,7 +2,14 @@ import Link from 'next/link';
 import { appConfig } from '@/lib/config/env';
 import { ThemeToggle } from './theme-toggle';
 
-const modules = ['Resumen Ejecutivo', 'Ventas', 'Compras', 'Finanzas', 'Contabilidad', 'Estado de datos'];
+const modules = [
+  { label: 'Resumen Ejecutivo', href: '/' },
+  { label: 'Ventas', href: '#' },
+  { label: 'Compras', href: '#' },
+  { label: 'Finanzas', href: '#' },
+  { label: 'Contabilidad', href: '#' },
+  { label: 'Estado de datos', href: '/data-status' },
+];
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   return (
@@ -19,7 +26,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </header>
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-4 p-4 lg:grid-cols-[220px,1fr]">
         <aside className="hidden rounded-xl border bg-white p-3 dark:bg-slate-900 lg:block">
-          <nav className="space-y-2">{modules.map((m) => <Link className="block rounded px-2 py-1 text-sm hover:bg-slate-100 dark:hover:bg-slate-800" href="#" key={m}>{m}</Link>)}</nav>
+          <nav className="space-y-2">{modules.map((m) => (
+              <Link className="block rounded px-2 py-1 text-sm hover:bg-slate-100 dark:hover:bg-slate-800" href={m.href} key={m.label}>
+                {m.label}
+              </Link>
+            ))}</nav>
         </aside>
         <main>{children}</main>
       </div>
