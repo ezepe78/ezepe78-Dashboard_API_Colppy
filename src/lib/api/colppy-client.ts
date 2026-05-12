@@ -1,0 +1,3 @@
+const endpoints={modelo1:'http://powerbi.tecnonegocios.com.ar:8000/api/dashboard_data',modelo2:'http://powerbi.tecnonegocios.com.ar:8000/api/dashboard_presupuestovsreal',modelo3:'http://powerbi.tecnonegocios.com.ar:8000/api/dashboard_cashflow'} as const;
+export async function fetchModel(key:keyof typeof endpoints){const basic=Buffer.from(`${process.env.COLPPY_API_USERNAME}:${process.env.COLPPY_API_PASSWORD}`).toString('base64');
+const res=await fetch(endpoints[key],{headers:{Authorization:`Basic ${basic}`},cache:'no-store'}); if(!res.ok) throw new Error(`Endpoint ${key} error ${res.status}`); return res.arrayBuffer();}

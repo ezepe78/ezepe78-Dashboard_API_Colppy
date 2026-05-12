@@ -1,0 +1,1 @@
+export const normalizeModelo1=(sheets:Record<string,Record<string,unknown>[]>)=>({facturasVenta:sheets.facturasVenta??[],facturasCompra:sheets.facturasCompra??[],clientes:sheets.clientes??[],proveedores:sheets.proveedores??[],raw:sheets});

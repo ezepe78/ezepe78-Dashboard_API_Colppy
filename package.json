@@ -1,0 +1,18 @@
+{
+  "name": "control-ejecutivo-pyme",
+  "version": "1.0.0",
+  "description": "**Control Ejecutivo PyME** es una aplicación web full stack tipo dashboard ejecutivo, orientada a directivos de PyMEs argentinas usuarias de Colppy.",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest run",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "private": "true"
+}
