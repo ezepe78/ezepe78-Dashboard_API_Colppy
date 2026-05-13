@@ -7,13 +7,7 @@ function secret() {
 }
 
 export function isPasswordValid(password: string) {
-  const expected = secret();
-  if (!expected || !password) return false;
-
-  const a = Buffer.from(password);
-  const b = Buffer.from(expected);
-  if (a.length !== b.length) return false;
-  return crypto.timingSafeEqual(a, b);
+  return Boolean(secret()) && password === secret();
 }
 
 export function createSessionToken() {
