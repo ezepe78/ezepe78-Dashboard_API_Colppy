@@ -1,6 +1,8 @@
+import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { getColppyBasicAuthHeader, colppyConfig } from '@/lib/config/colppy';
 import { getCache, getCacheMeta, setCache } from '@/lib/data/cache';
+import { isSessionTokenValid, SESSION_COOKIE } from '@/lib/auth/access-password';
 
 type SyncPayload = {
   dashboardData: unknown;
@@ -24,16 +26,26 @@ async function fetchJson(path: string, authHeader: string) {
   return response.json();
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+  const token = (await cookies()).get(SESSION_COOKIE)?.value;
+  if (!isSessionTokenValid(token)) {
+    return NextResponse.json({ error: 'No autenticado.' }, { status: 401 });
+  }
+
+  const forceRefresh = new URL(request.url).searchParams.get('forceRefresh') === '1';
   const cached = getCache<SyncPayload>(CACHE_KEY);
   const meta = getCacheMeta(CACHE_KEY);
-  if (cached) {
+
+  if (cached && !forceRefresh) {
     return NextResponse.json({ source: 'cache', ...cached, cacheExpiresAt: meta?.expiresAt ?? null });
   }
 
   const authHeader = getColppyBasicAuthHeader();
   if (!authHeader) {
-    return NextResponse.json({ error: 'Faltan credenciales COLPPY_API_USERNAME/COLPPY_API_PASSWORD.' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Faltan credenciales COLPPY_API_USERNAME/COLPPY_API_PASSWORD.' },
+      { status: 500 },
+    );
   }
 
   try {
