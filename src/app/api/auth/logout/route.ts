@@ -3,6 +3,6 @@ import { SESSION_COOKIE } from '@/lib/auth/access-password';
 
 export async function POST(request: Request) {
   const res = NextResponse.redirect(new URL('/login', request.url), { status: 303 });
-  res.cookies.set(SESSION_COOKIE, '', { path: '/', maxAge: 0 });
+  res.cookies.set(SESSION_COOKIE, '', { path: '/', maxAge: 0, httpOnly: true, sameSite: 'lax' });
   return res;
 }

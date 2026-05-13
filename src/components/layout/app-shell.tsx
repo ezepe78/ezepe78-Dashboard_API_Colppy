@@ -4,11 +4,11 @@ import { ThemeToggle } from './theme-toggle';
 
 const modules = [
   { label: 'Resumen Ejecutivo', href: '/' },
-  { label: 'Ventas', href: '#' },
-  { label: 'Compras', href: '#' },
-  { label: 'Finanzas', href: '#' },
-  { label: 'Contabilidad', href: '#' },
-  { label: 'Estado de datos', href: '/data-status' },
+  { label: 'Ventas', href: '/ventas' },
+  { label: 'Compras', href: '/compras' },
+  { label: 'Finanzas', href: '/finanzas' },
+  { label: 'Contabilidad', href: '/contabilidad' },
+  { label: 'Estado de datos', href: '/estado-datos' },
 ];
 
 export function AppShell({ children }: { children: React.ReactNode }) {
@@ -21,16 +21,20 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <form action="/api/auth/logout" method="post"><button className="rounded border px-2 py-1 text-sm">Cerrar sesión</button></form>
+          <form action="/api/auth/logout" method="post">
+            <button className="rounded border px-2 py-1 text-sm">Cerrar sesión</button>
+          </form>
         </div>
       </header>
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-4 p-4 lg:grid-cols-[220px,1fr]">
         <aside className="hidden rounded-xl border bg-white p-3 dark:bg-slate-900 lg:block">
-          <nav className="space-y-2">{modules.map((m) => (
+          <nav className="space-y-2">
+            {modules.map((m) => (
               <Link className="block rounded px-2 py-1 text-sm hover:bg-slate-100 dark:hover:bg-slate-800" href={m.href} key={m.label}>
                 {m.label}
               </Link>
-            ))}</nav>
+            ))}
+          </nav>
         </aside>
         <main>{children}</main>
       </div>
