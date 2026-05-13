@@ -6,8 +6,16 @@ import { SESSION_COOKIE, isSessionTokenValid } from '@/lib/auth/access-password'
 const checks = [
   { label: 'Sesión protegida', status: 'ok', detail: 'Cookie httpOnly firmada con HMAC SHA-256.' },
   { label: 'API de autenticación', status: 'ok', detail: 'Rutas /api/auth/login, /logout y /status disponibles.' },
-  { label: 'Sincronización Colppy', status: 'ok', detail: 'Endpoint /api/data/sync protegido por sesión y con refresh opcional (?forceRefresh=1).' },
-  { label: 'Caché de datos', status: 'ok', detail: 'Caché temporal en servidor con TTL configurable vía CACHE_TTL_MINUTES.' },
+  {
+    label: 'Sincronización Colppy',
+    status: 'ok',
+    detail: 'Endpoint /api/data/sync protegido por sesión y con refresh opcional (?forceRefresh=1).',
+  },
+  {
+    label: 'Caché de datos',
+    status: 'ok',
+    detail: 'Caché temporal en servidor con TTL configurable vía CACHE_TTL_MINUTES.',
+  },
 ] as const;
 
 export default async function DataStatusPage() {

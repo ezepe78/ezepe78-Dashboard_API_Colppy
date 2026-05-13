@@ -35,13 +35,17 @@ export async function GET(request: Request) {
   const forceRefresh = new URL(request.url).searchParams.get('forceRefresh') === '1';
   const cached = getCache<SyncPayload>(CACHE_KEY);
   const meta = getCacheMeta(CACHE_KEY);
+
   if (cached && !forceRefresh) {
     return NextResponse.json({ source: 'cache', ...cached, cacheExpiresAt: meta?.expiresAt ?? null });
   }
 
   const authHeader = getColppyBasicAuthHeader();
   if (!authHeader) {
-    return NextResponse.json({ error: 'Faltan credenciales COLPPY_API_USERNAME/COLPPY_API_PASSWORD.' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Faltan credenciales COLPPY_API_USERNAME/COLPPY_API_PASSWORD.' },
+      { status: 500 },
+    );
   }
 
   try {
